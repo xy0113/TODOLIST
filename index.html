@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flow · 待办清单</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="header-left">
+        <h1 class="logo">Flow<span>待办</span></h1>
+        <p class="date" id="todayText"></p>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" id="themeToggle" title="切换主题 (T)">🌙</button>
+        <button class="icon-btn" id="exportBtn" title="导出数据">📤</button>
+        <button class="icon-btn danger" id="clearDoneBtn" title="清除已完成">🧹</button>
+      </div>
+    </header>
+
+    <!-- 进度条 -->
+    <section class="progress-wrap">
+      <div class="progress-info">
+        <span id="progressLabel">今天也要加油哦</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </section>
+
+    <!-- 快捷添加 -->
+    <section class="add-panel">
+      <div class="add-row">
+        <input id="taskInput" type="text" placeholder="想做点什么？按 Enter 快速添加…" maxlength="120" autocomplete="off" />
+        <button id="addBtn" class="primary-btn">＋ 添加</button>
+      </div>
+      <div class="add-options">
+        <select id="prioritySelect" title="优先级">
+          <option value="low">🟢 低</option>
+          <option value="mid" selected>🟡 中</option>
+          <option value="high">🔴 高</option>
+        </select>
+        <input id="dueInput" type="date" title="截止日期" />
+        <input id="tagInput" type="text" placeholder="标签（回车添加）" list="tagList" maxlength="12" />
+        <datalist id="tagList"></datalist>
+      </div>
+    </section>
+
+    <!-- 工具栏 -->
+    <section class="toolbar">
+      <div class="filters" id="filters">
+        <button class="filter active" data-filter="all">全部</button>
+        <button class="filter" data-filter="active">进行中</button>
+        <button class="filter" data-filter="done">已完成</button>
+      </div>
+      <div class="toolbar-right">
+        <input id="searchInput" type="search" placeholder="🔍 搜索任务…" />
+        <select id="sortSelect" title="排序">
+          <option value="created">按创建时间</option>
+          <option value="priority">按优先级</option>
+          <option value="due">按截止日期</option>
+          <option value="alpha">按字母</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- 任务列表 -->
+    <ul id="taskList" class="task-list"></ul>
+
+    <!-- 空状态 -->
+    <div id="emptyState" class="empty">
+      <div class="empty-emoji">🌤️</div>
+      <p>暂无任务，去添加一个吧！</p>
+    </div>
+
+    <footer class="footer">
+      <span id="counterText">共 0 项任务</span>
+      <span class="hint">Enter 添加 · 双击任务编辑 · 拖动排序 · T 切换主题</span>
+    </footer>
+  </div>
+
+  <template id="taskTemplate">
+    <li class="task" draggable="true">
+      <span class="drag-handle" title="拖动排序">⋮⋮</span>
+      <label class="checkbox">
+        <input type="checkbox" class="task-check" />
+        <span class="checkmark"></span>
+      </label>
+      <div class="task-body">
+        <span class="task-text"></span>
+        <input class="task-edit" type="text" maxlength="120" hidden />
+        <div class="task-meta">
+          <span class="badge priority"></span>
+          <span class="badge due"></span>
+          <span class="badge tag"></span>
+        </div>
+      </div>
+      <div class="task-actions">
+        <button class="mini-btn edit-btn" title="编辑">✏️</button>
+        <button class="mini-btn del-btn" title="删除">🗑️</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
